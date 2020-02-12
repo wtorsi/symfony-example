@@ -1,0 +1,33 @@
+parameters:
+    geoip.csv_path: '%kernel.project_dir%/var/geoip/GeoLite2-City-Locations-ru.csv'
+    geoip.binary_path: '%kernel.project_dir%/var/geoip/GeoLite2-City.mmdb'
+
+
+doctrine:
+    orm:
+        mappings:
+            Location:
+                is_bundle: false
+                type: annotation
+                dir: '%kernel.project_dir%/src/Location/Entity'
+                prefix: 'Location\Entity'
+
+
+services:
+    _defaults:
+        autowire: true
+        autoconfigure: true
+        public: false
+
+    Location\:
+        resource: '../../src/Location'
+        exclude: '../../src/Location/{Exception}'
+
+    Location\Bridge\GeoIpBridge:
+        arguments:
+            $path: '%geoip.binary_path%'
+
+    Location\Command\UpdateGeoIpCommand:
+        arguments:
+            $path: '%geoip.csv_path%'
+

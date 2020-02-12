@@ -1,0 +1,14 @@
+services:
+    _defaults:
+        autowire: true
+        autoconfigure: true
+        public: false
+
+    Security\:
+        resource: '../../src/Security'
+        exclude: '../../src/Security/{Exception}'
+
+    Security\Controller\:
+        resource: '../../src/Security/Controller'
+        public: true
+        tags: ['controller.service_arguments']

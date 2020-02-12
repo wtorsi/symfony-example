@@ -1,0 +1,7 @@
+./bin/console cache:clear --no-warmup "$@";
+./bin/console cache:warmup "$@";
+./bin/console doctrine:cache:clear-entity-region --all "$@";
+./bin/console doctrine:cache:clear-collection-region --all "$@";
+./bin/console doctrine:cache:clear-result "$@";
+./bin/console doctrine:cache:clear-query --flush "$@";
+./bin/console doctrine:cache:clear-metadata "$@";

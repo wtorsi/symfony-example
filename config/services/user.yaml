@@ -1,0 +1,18 @@
+doctrine:
+    orm:
+        mappings:
+            User:
+                is_bundle: false
+                type: annotation
+                dir: '%kernel.project_dir%/src/User/Entity'
+                prefix: 'User\Entity'
+
+services:
+    _defaults:
+        autowire: true
+        autoconfigure: true
+        public: false
+
+    User\:
+        resource: '../../src/User'
+        exclude: '../../src/User/{Entity,Exception}'

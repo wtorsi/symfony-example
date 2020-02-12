@@ -13,6 +13,15 @@ monolog:
         #chromephp:
         #    type: chromephp
         #    level: info
+        buffered:
+            type:     buffer
+            handler:  easylog
+            channels: ['!event']
+            level:    debug
+        easylog:
+            type: service
+            id:   EasyCorp\EasyLog\EasyLogHandler
+
         console:
             type: console
             process_psr_3_messages: false

@@ -38,3 +38,5 @@ link:
     ip_not_recognizable: IP not recognizable
 media:
     no_stats: There are no stats yet :(
+error:
+    something_went_wrong: Something went wrong

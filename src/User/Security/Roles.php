@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace User\Security;
 
-use Core\Enum\AbstractEnum;
+use Core\AbstractEnum;
 
 final class Roles extends AbstractEnum
 {

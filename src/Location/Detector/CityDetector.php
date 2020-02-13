@@ -17,6 +17,6 @@ class CityDetector implements CityDetectorInterface
 
     public function detect(Request $request): ?City
     {
-        return $this->bridge->findCityByIp($request->getClientIp());
+        return $request->getClientIp() ? $this->bridge->findCityByIp($request->getClientIp()) : null;
     }
 }

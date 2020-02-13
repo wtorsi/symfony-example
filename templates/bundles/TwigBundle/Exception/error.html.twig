@@ -1,0 +1,27 @@
+{% extends "base.html.twig" %}
+{# @var exception \Symfony\Component\Debug\Exception\FlattenException #}
+
+{%- block main -%}
+    <section class="d-flex align-items-center justify-content-center vh-100" id="error">
+        <div id="error" class="d-flex align-items-center">
+            <article class="text-center  col-12">
+                <h1 class="display-1 mb-4">{{ exception.statusCode }}</h1>
+                <p class="lead ">{{- 'error.something_went_wrong'|trans|raw|nl2br -}}</p>
+            </article>
+        </div>
+    </section>
+{%- endblock -%}
+
+{%- block modals -%}
+{%- endblock -%}
+
+{%- block stylesheets -%}
+    {{ encore_entry_link_tags('error/error/index') }}
+{%- endblock -%}
+
+{%- block javascripts -%}
+    {{ encore_entry_script_tags('error/error/index') }}
+{% endblock %}
+
+
+

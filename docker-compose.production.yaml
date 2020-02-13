@@ -27,9 +27,9 @@ services:
             placement:
                 constraints: [node.role == manager]
 
-    mysql:
-        build: .docker/mysql
-        container_name: mysql
+    postgresql:
+        build: .docker/postgresql
+        container_name: postgresql
         working_dir: /usr/src/app
         volumes:
             - .docker/data/db:/var/lib/mysql

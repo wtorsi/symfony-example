@@ -1,0 +1,12 @@
+#!/bin/bash
+set -x;
+
+export APP_ENV=test APP_DEBUG=1;
+composer install;
+
+bin/console doctrine:database:create ;
+bin/console doctrine:schema:update --force -n ;
+bin/console doctrine:fixtures:load -n ;
+
+bin/console messenger:setup-transports ;
+bin/phpunit ;

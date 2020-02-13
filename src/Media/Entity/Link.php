@@ -43,26 +43,24 @@ class Link
      */
     private ?\DateTimeImmutable $expirationDatetime = null;
 
-    public function __construct(UserInterface $user, string $url, string $hash)
+    public function __construct(UserInterface $user, string $url, string $hash, ?\DateTimeImmutable $expirationDatetime = null)
     {
         $this->id = Uuid::uuid4();
         $this->user = $user;
         $this->url = $url;
         $this->hash = $hash;
         $this->createdDatetime = new \DateTimeImmutable();
+        $this->expirationDatetime = $expirationDatetime;
     }
 
     public static function factory(LinkDto $dto, SluggerInterface $slugger): self
     {
-        $entity = new static(
+        return new static(
             $dto->getUser(),
             $dto->url,
             $slugger->slugify($dto->url, ['length' => 10, 'class' => static::class, 'field' => 'hash']),
+            $dto->expirationDatetime
         );
-
-        $entity->expirationDatetime = $dto->expirationDatetime;
-
-        return $entity;
     }
 
     /**

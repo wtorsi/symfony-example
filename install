@@ -9,11 +9,9 @@ bin/console doctrine:migration:migrate -n ;
 bin/console doctrine:fixtures:load -n ;
 
 bin/console messenger:setup-transports ;
-systemctl --user enable messenger.service;
-systemctl --user start messenger.service;
 
 export APP_ENV=prod APP_DEBUG=0;
 composer dump-env prod;
 composer install --no-dev --optimize-autoloader --classmap-authoritative --apcu-autoloader;
-
+bin/console  messenger:consume async_priority_high async_priority_low ;
 

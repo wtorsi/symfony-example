@@ -1,0 +1,24 @@
+doctrine:
+    orm:
+        mappings:
+            Media:
+                is_bundle: false
+                type: annotation
+                dir: '%kernel.project_dir%/src/Media/Entity'
+                prefix: 'Media\Entity'
+
+services:
+    _defaults:
+        autowire: true
+        autoconfigure: true
+        public: false
+
+    Media\:
+        resource: '../../src/Media'
+        exclude: '../../src/Media/{Entity,Exception}'
+
+
+    Media\Controller\:
+        resource: '../../src/Media/Controller'
+        public: true
+        tags: ['controller.service_arguments']

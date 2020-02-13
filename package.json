@@ -3,7 +3,7 @@
   "version": "0.0.1",
   "description": " ",
   "scripts": {
-    "dev-server": "yarn encore dev-server --https --port 9000 --allowed-hosts eurofoods.wip --hot --sock-port 9000 --sock-path /sockjs-node --config-name _default",
+    "dev-server": "yarn encore dev-server --https --port 9000 --allowed-hosts ya.wip --hot --sock-port 9000 --sock-path /sockjs-node --config-name _default",
     "build": "yarn encore production"
   },
   "dependencies": {

@@ -1,0 +1,5 @@
+url:
+    illegal_chars: Entered URL contains illegal chars.
+
+link:
+    expiration_less_than_now: Link expiration date must be in future.

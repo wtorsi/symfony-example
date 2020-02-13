@@ -1,0 +1,21 @@
+{% extends "base.html.twig" %}
+{# @var form \Symfony\Component\Form\FormView #}
+{%- block content -%}
+
+    <h1 class="display-1">{{- 'security.signin'|trans -}}</h1>
+    {%- form_theme form with ['form/inline.html.twig']  only -%}
+    {{- form_start(form) -}}
+    {{- form_rest(form) -}}
+    <button type="submit" class="btn btn-primary">{{- 'security.signin'|trans -}}</button>
+    {{- form_end(form) -}}
+
+{%- endblock -%}
+
+
+{%- block stylesheets -%}
+    {{ encore_entry_link_tags('security/security/login') }}
+{%- endblock -%}
+
+{%- block javascripts -%}
+    {{ encore_entry_script_tags('security/security/login') }}
+{% endblock %}

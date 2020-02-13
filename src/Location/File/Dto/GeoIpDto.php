@@ -9,14 +9,23 @@ class GeoIpDto
     private string $subdivisionIsoName;
     private string $cityName;
     private string $timeZone;
+    private string $countryName;
+    private int $id;
 
-    public function __construct(string $countryIsoCode, string $subdivisionIsoCode, string $subdivisionIsoName, string $cityName, string $timeZone)
+    public function __construct(int $id, string $countryIsoCode, string $countryName, string $subdivisionIsoCode, string $subdivisionIsoName, string $cityName, string $timeZone)
     {
+        $this->id = $id;
         $this->countryIsoCode = $countryIsoCode;
         $this->subdivisionIsoCode = $subdivisionIsoCode;
         $this->subdivisionIsoName = $subdivisionIsoName;
         $this->cityName = $cityName;
         $this->timeZone = $timeZone;
+        $this->countryName = $countryName;
+    }
+
+    public function getId(): int
+    {
+        return $this->id;
     }
 
     public function getCountryIsoCode(): string
@@ -44,4 +53,11 @@ class GeoIpDto
         return $this->timeZone;
     }
 
+    /**
+     * @return string
+     */
+    public function getCountryName(): string
+    {
+        return $this->countryName;
+    }
 }

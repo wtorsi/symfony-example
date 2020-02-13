@@ -21,4 +21,3 @@ composer install --no-dev --optimize-autoloader --classmap-authoritative --apcu-
 ./bin/console messenger:stop-workers ;
 systemctl --user daemon-reload;
 ./bin/console assets:install;
-crontab < ./.config/crontab;

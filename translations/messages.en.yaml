@@ -1,0 +1,40 @@
+meta:
+    title:
+        common: Yet Another Shortener
+        page: Page %page%
+    description:
+        common: Yet another best shortener ever
+    keywords:
+        common: Shortener, Yet Another, Symfony
+    skip_to_main_content: Skip to main content
+common:
+    copy: © Rights reserved by shortener.itsd.one %year% year
+developer: Website developed
+
+
+security:
+    field:
+        username: Username
+        password: Password
+    signin: Sign In
+page:
+    title:
+        index: Yet another App
+        stats: Stats
+    back: Get back
+link:
+    title:
+        history: Your links
+    field:
+        url: Your url
+        created_datetime: Created at
+        expiration_datetime: Expired at
+        datetime: Expiration datetime
+        datetime_help: After selected date the link will not work
+        visible_link: Visible link
+    shorten: Shorten your link, yep!
+    detailed_view: Detailed view
+    expiration_not_set: Not set
+    ip_not_recognizable: IP not recognizable
+media:
+    no_stats: There are no stats yet :(

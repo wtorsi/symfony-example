@@ -1,0 +1,33 @@
+services:
+    _defaults:
+        autoconfigure: true
+        autowire: true
+        public: false
+
+    _instanceof:
+        Dev\PaginationBundle\Paginator\PaginatorInterface:
+            tags: ['pagination.paginator']
+        Dev\PaginationBundle\Pagination\Type\PaginationTypeInterface:
+            tags: ['pagination.type']
+
+    Dev\PaginationBundle\:
+        resource: '../../'
+        exclude: "../../{DependencyInjection,Resources,ExceptionInterface,Events,Repository}"
+
+    Dev\PaginationBundle\Paging:
+        lazy: true
+
+    Dev\PaginationBundle\Pagination\PaginationFactory:
+        public: true
+
+    Dev\PaginationBundle\Paginator\PaginatorRegistry:
+        arguments:
+            $paginators: !tagged pagination.paginator
+
+    Dev\PaginationBundle\Pagination\PaginationRegistry:
+        arguments:
+            $types: !tagged pagination.type
+
+    Dev\PaginationBundle\Twig\PaginationExtension:
+        tags:
+            - { name: twig.extension, priority: 32 }

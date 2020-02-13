@@ -1,0 +1,72 @@
+{% extends "base.html.twig" %}
+
+
+{%- block stylesheets -%}
+    {{ encore_entry_link_tags('media/link_statistic/view') }}
+{%- endblock -%}
+
+{%- block javascripts -%}
+    {{ encore_entry_script_tags('media/link_statistic/view') }}
+{% endblock %}
+
+{%- block content -%}
+
+    <section class="">
+        <header class="mb-4">
+            <h1 class="display-1">{{- 'page.title.index'|trans -}}<br></h1>
+            <h2 class="text-muted">{{ 'page.title.stats'|trans }}</h2>
+            <a href="{{ path('page_index') }}" class="btn btn-outline-primary">{{- 'page.back'|trans -}}</a>
+        </header>
+
+
+        <article>
+            {# @var entity \Media\Entity\Link #}
+            <dl>
+                <dt>{{- 'link.field.url'|trans -}}</dt>
+                <dd><a href="{{ entity.url }}" target="_blank">{{- entity.url -}}</a></dd>
+                <dt>{{- 'link.field.visible_link'|trans -}}</dt>
+                <dd><a href="{{ url('app_index', {hash: entity.hash}) }}" {#
+                #}target="_blank">{{ url('app_index', {hash: entity.hash}) }}</a></dd>
+                <dt>{{- 'link.field.created_datetime'|trans -}}</dt>
+                <dd>{{- entity.createdDatetime|format_datetime -}}</dd>
+                <dt>{{- 'link.field.expiration_datetime'|trans -}}</dt>
+                <dd>{{- entity.expirationDatetime|format_datetime|default('link.expiration_not_set'|trans) -}}</dd>
+            </dl>
+
+            {%- if entities|length -%}
+                <table class="table table-bordered">
+                    <tbody>
+                    {%- for entity in entities -%}
+                        {# @var entity \Media\Entity\LinkStatistic  #}
+                        <tr>
+                            <td class="small text-truncate">
+                                <time datetime="{{ entity.datetime|date('c') }}" class="text-muted">
+                                    {{- entity.datetime|format_datetime -}}
+                                </time>
+                            </td>
+                            <td class="text-center">
+                                {%- if entity.city -%}
+                                    {{- entity.city.name -}} <br>
+                                    {{- entity.city.country.name -}}
+                                {%- else -%}
+                                    <small class="text-muted">
+                                        {{- 'link.ip_not_recognizable'|trans -}}
+                                    </small>
+                                {%- endif -%}
+                            </td>
+                            <td class="small text-muted">
+                                {{- entity.meta['User-Agent'] -}}
+                            </td>
+                        </tr>
+                    {%- endfor -%}
+                    </tbody>
+                </table>
+                {{- render_pagination(pagination, 'pagination/default.html.twig') -}}
+            {%- else -%}
+                <p class="text-muted">{{- 'media.no_stats'|trans -}}</p>
+            {%- endif -%}
+        </article>
+    </section>
+
+
+{%- endblock -%}

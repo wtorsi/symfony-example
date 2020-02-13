@@ -1,0 +1,29 @@
+//$fa-font-path: "../../../../font" !default;
+@import '~@fortawesome/fontawesome-pro/scss/variables';
+@import '~@fortawesome/fontawesome-pro/scss/mixins';
+@import '~@fortawesome/fontawesome-pro/scss/core';
+
+.#{$fa-css-prefix},
+.fas,
+.far,
+.fal,
+.fab {
+  width: 1em;
+  height: 1em;
+  vertical-align: -.125em;
+}
+
+@import '~@fortawesome/fontawesome-pro/scss/larger';
+@import '~@fortawesome/fontawesome-pro/scss/fixed-width';
+
+
+
+
+//@import "../../node_modules/@fortawesome/fontawesome-pro/scss/brands";
+//@import "../../node_modules/@fortawesome/fontawesome-pro/scss/light";
+//@import "../../node_modules/@fortawesome/fontawesome-pro/scss/regular";
+//@import "../../node_modules/@fortawesome/fontawesome-pro/scss/solid";
+
+
+
+

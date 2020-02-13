@@ -9,6 +9,8 @@ Encore
     .setPublicPath('/')
     .setManifestKeyPrefix('build/')
     .addEntry('page/page/index', './assets/entry/page/page/index.js')
+    .addEntry('security/security/login', './assets/entry/security/security/login.js')
+    .addEntry('media/link_statistic/view', './assets/entry/media/link_statistic/view.js')
     .addEntry('error/error/index', './assets/entry/error/error/index.js')
     .enableSingleRuntimeChunk()
     .splitEntryChunks()
@@ -63,18 +65,19 @@ Encore
         corejs: 3,
         includeNodeModules: ['bootstrap']
     })
-    .addPlugin(new WorkboxPlugin.GenerateSW({
-        swDest: "../sw.js",
-        skipWaiting: true,
-        clientsClaim: true,
-        cleanupOutdatedCaches: true,
-    }))
+
     .enableSassLoader()
     .autoProvidejQuery();
 
 
 if (Encore.isProduction()) {
     Encore
+        .addPlugin(new WorkboxPlugin.GenerateSW({
+            swDest: "../sw.js",
+            skipWaiting: true,
+            clientsClaim: true,
+            cleanupOutdatedCaches: true,
+        }))
         .enablePostCssLoader()
         .configureUrlLoader({
             fonts: {limit: 4096},

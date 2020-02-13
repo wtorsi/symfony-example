@@ -38,6 +38,6 @@ class GeoIpCsvReader extends \SplFileObject
          $metroCode,
          $timeZone] = $row;
 
-        return new GeoIpDto($countryIsoCode, $subdivision1IsoCode, $subdivision1Name, $cityName, $timeZone);
+        return new GeoIpDto((int) $geoNameId, $countryIsoCode, $countryName, $subdivision1IsoCode, $subdivision1Name, $cityName, $timeZone);
     }
 }

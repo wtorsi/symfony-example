@@ -1,0 +1,13 @@
+parameters:
+    app.path: '/app'
+
+services:
+    _defaults:
+        autowire: true
+        autoconfigure: true
+        public: false
+
+    App\Controller\:
+        resource: '../../src/App/Controller'
+        public: true
+        tags: ['controller.service_arguments']

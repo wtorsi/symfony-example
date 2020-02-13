@@ -1,0 +1,55 @@
+{% extends "base.html.twig" %}
+
+{%- block stylesheets -%}
+    {{- encore_entry_link_tags('page/page/index') -}}
+{%- endblock -%}
+
+{%- block javascripts -%}
+    {{- encore_entry_script_tags('page/page/index') -}}
+{% endblock %}
+
+{%- block content -%}
+    {# @var entities \Media\Entity\Link[] #}
+    {# @var form \Symfony\Component\Form\FormView #}
+    {# @var pagination \Dev\PaginationBundle\Pagination\View\PaginationView #}
+
+    <h1 class="display-1">{{- 'page.title.index'|trans -}}</h1>
+
+    <section>
+        {% form_theme form with ['form/inline.html.twig'] only %}
+        {{- form_start(form) -}}
+        {{- form_rest(form) -}}
+        <button class="btn btn-primary">{{- 'link.shorten'|trans -}}</button>
+        {{- form_end(form) -}}
+    </section>
+
+
+    {%- if entities|length -%}
+        <section class="mt-6">
+            <h4>{{- 'link.title.history'|trans -}}</h4>
+            <table class="table table-bordered">
+                <tbody>
+                {%- for entity in entities  -%}
+                    <tr>
+                        <td class="small text-truncate">
+                            {{- entity.url -}}<br>
+                            <a href="{{ path('app_index', {hash: entity.hash}) }}" {#
+                            #}class="small">{{- url('app_index', {hash: entity.hash}) -}}</a>
+                        </td>
+                        <td class="text-center  ">
+                            <a href="{{ path('media_link_statistic_view', {id: entity.id}) }}" class="btn btn-sm btn-outline-info">
+                                {{- 'link.detailed_view'|trans -}}
+                            </a>
+                        </td>
+                    </tr>
+                {%- endfor -%}
+                </tbody>
+            </table>
+            {{- render_pagination(pagination, 'pagination/default.html.twig') -}}
+        </section>
+    {%- endif -%}
+
+
+{%- endblock -%}
+
+

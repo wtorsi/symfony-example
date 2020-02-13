@@ -19,10 +19,20 @@ class Country
      * @ORM\Column(type="string", length=127, nullable=false, unique=true)
      */
     private string $name;
+    /**
+     * @ORM\Column(type="string", length=127, nullable=false, unique=true)
+     */
+    private string $isoCode;
 
-    public function __construct(string $name)
+    public function __construct(string $isoCode, string $name)
     {
         $this->id = Uuid::uuid4();
+        $this->isoCode = $isoCode;
         $this->name = $name;
+    }
+
+    public function getName(): string
+    {
+        return $this->name;
     }
 }

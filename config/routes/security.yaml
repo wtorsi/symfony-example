@@ -1,0 +1,4 @@
+media:
+    resource: "../../src/Security/Controller/"
+    type:     annotation
+    prefix: "%app.path%"

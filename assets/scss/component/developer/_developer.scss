@@ -1,0 +1,27 @@
+.dev {
+  $size: 30px;
+  $spacer: 0.5rem;
+  position: relative;
+  display: inline-block;
+  padding-right: calc(#{$size} + #{$spacer});
+  line-height: 1.2;
+  text-align: right;
+
+  &::before {
+	content: '';
+	width: $size;
+	height: $size;
+	position: absolute;
+	background-image: url('./itsdone.svg');
+	background-size: contain;
+	background-repeat: no-repeat;
+	display: inline-block;
+	right: 0;
+	top: 50%;
+	transform: translateY(-50%);
+  }
+
+  a, span {
+	font-weight: bold;
+  }
+}

@@ -1,0 +1,158 @@
+{%- use "form/layout.html.twig" -%}
+
+{# Widgets #}
+{# custom fields #}
+{#{% block money_widget -%}#}
+{#    {%- set prepend = not (money_pattern starts with '{{') -%}#}
+{#    {%- set append = not (money_pattern ends with '}}') -%}#}
+{#    {%- set replace = {#}
+{#        "₽": "<i class='fa fa-ruble-sign fa-fw' aria-label='₽'></i>",#}
+{#        "$": "<i class='fa fa-dollar-sign fa-fw' aria-label='$'></i>",#}
+{#        "€": "<i class='fa fa-euro-sign fa-fw' aria-label='€'></i>",#}
+{#    } -%}#}
+{#    {%- if prepend or append -%}#}
+{#        <div class="input-group{{ group_class|default('') }}">#}
+{#            {%- if prepend -%}#}
+{#                <div class="input-group-prepend">#}
+{#                    <span class="input-group-text">{{ money_pattern|form_encode_currency|replace(replace)|raw}}</span>#}
+{#                </div>#}
+{#            {%- endif -%}#}
+{#            {{- block('form_widget_simple') -}}#}
+{#            {%- if append -%}#}
+{#                <div class="input-group-append">#}
+{#                    <span class="input-group-text">{{ money_pattern|form_encode_currency|replace(replace)|raw }}</span>#}
+{#                </div>#}
+{#            {%- endif -%}#}
+{#        </div>#}
+{#    {%- else -%}#}
+{#        {{- block('form_widget_simple') -}}#}
+{#    {%- endif -%}#}
+{#{%- endblock money_widget %}#}
+
+
+
+{#{% block choice_widget_expanded -%}#}
+{#    <div {{ block('widget_container_attributes') }}>#}
+{#        {%- for child in form %}#}
+{#            {{- form_widget(child, {#}
+{#                parent_label_class: label_attr.class|default(''),#}
+{#                translation_domain: choice_translation_domain,#}
+{#                valid: valid,#}
+{#                is_last: loop.last,#}
+{#                expanded: true#}
+{#            }) -}}#}
+{#        {% endfor -%}#}
+{#    </div>#}
+{#{%- endblock choice_widget_expanded %}#}
+
+
+{#{% block checkbox_radio_label -%}#}
+{#    #}{#- Do not display the label if widget is not defined in order to prevent double label rendering -#}
+{#    {%- if widget is defined -%}#}
+{#        {%- set label_attr = label_attr|merge({class: (label_attr.class|default('') ~ ' custom-control-label')|trim}) -%}#}
+{#        {%- if not compound -%}#}
+{#            {% set label_attr = label_attr|merge({'for': id}) %}#}
+{#        {%- endif -%}#}
+{#        {%- if required -%}#}
+{#            {%- set label_attr = label_attr|merge({class: (label_attr.class|default('') ~ ' required')|trim}) -%}#}
+{#        {%- endif -%}#}
+{#        {%- if parent_label_class is defined -%}#}
+{#            {%- set label_attr = label_attr|merge({class: (label_attr.class|default('') ~ ' ' ~ parent_label_class)|replace({'checkbox-inline': '', 'radio-inline': '', 'checkbox-custom': '', 'radio-custom': ''})|trim}) -%}#}
+{#        {%- endif -%}#}
+{#        {%- if label is not same as(false) and label is empty -%}#}
+{#            {%- if label_format is not empty -%}#}
+{#                {%- set label = label_format|replace({#}
+{#                    '%name%': name,#}
+{#                    '%id%': id,#}
+{#                }) -%}#}
+{#            {%- else -%}#}
+{#                {%- set label = name|humanize -%}#}
+{#            {%- endif -%}#}
+{#        {%- endif -%}#}
+{#        {{- widget|raw -}}#}
+{#        <label{% for attrname, attrvalue in label_attr %} {{ attrname }}="{{ attrvalue }}"{% endfor %}>#}
+{#        {{- label is not same as(false) ? (translation_domain is same as(false) ? label : label|trans({}, translation_domain))|raw -}}#}
+{#        </label>#}
+{#        #}{#{%- if not expanded|default(false) or is_last|default(false) -%}#}
+{#            #}{#{{- form_errors(form) -}}#}
+{#        #}{#{%- endif -%}#}
+{#    {%- endif -%}#}
+{#{%- endblock checkbox_radio_label %}#}
+
+
+{#{% block checkbox_widget -%}#}
+{#    {%- set parent_label_class = parent_label_class|default(label_attr.class|default('')) -%}#}
+{#    {%- set attr = attr|merge({class: (attr.class|default('') ~ ' custom-control-input')|trim}) -%}#}
+{#    <div class="custom-control custom-checkbox{{ 'checkbox-inline' in parent_label_class ? ' custom-control-inline' }}">#}
+{#        {{- form_label(form, null, { widget: block('checkbox_widget', 'form_div_layout.html.twig') }) -}}#}
+{#    </div>#}
+{#{%- endblock checkbox_widget %}#}
+
+{#{% block radio_widget -%}#}
+{#    {%- set parent_label_class = parent_label_class|default(label_attr.class|default('')) -%}#}
+{#    {%- set attr = attr|merge({class: (attr.class|default('') ~ ' custom-control-input')|trim}) -%}#}
+{#    <div class="custom-control custom-radio{{ 'radio-inline' in parent_label_class ? ' custom-control-inline' }}">#}
+{#        {{- form_label(form, null, { widget: block('radio_widget', 'form_div_layout.html.twig') }) -}}#}
+{#    </div>#}
+{#{%- endblock radio_widget %}#}
+
+
+{#{%- block choice_captcha_widget -%}#}
+{#    <img src="{{ captcha_code }}" alt="">#}
+{#    #}{#{{- block('choice_widget') -}}#}
+{#    {%- for f in form  -%}#}
+{#        {{ form_widget(f) }}#}
+{#    {%- endfor -%}#}
+
+{#{%- endblock -%}#}
+
+
+
+
+
+
+{# payment methods #}
+{#{%- block payment_method_entry_label -%}#}
+    {#{% if label is not same as(false) -%}#}
+        {#{%- if compound is defined and compound -%}#}
+            {#{%- set element = 'legend' -%}#}
+            {#{%- set label_attr = label_attr|merge({class: (label_attr.class|default('') ~ ' col-form-label')|trim}) -%}#}
+        {#{%- else -%}#}
+            {#{%- set label_attr = label_attr|merge({for: id}) -%}#}
+        {#{%- endif -%}#}
+        {#{% if required -%}#}
+            {#{% set label_attr = label_attr|merge({class: (label_attr.class|default('') ~ ' required')|trim}) %}#}
+        {#{%- endif -%}#}
+        {#{% if label is empty -%}#}
+            {#{%- if label_format is not empty -%}#}
+                {#{% set label = label_format|replace({#}
+                    {#'%name%': name,#}
+                    {#'%id%': id,#}
+                {#}) %}#}
+            {#{%- else -%}#}
+                {#{% set label = name|humanize %}#}
+            {#{%- endif -%}#}
+        {#{%- endif -%}#}
+        {#<{{ element|default('label') }}{% if label_attr %}{% with { attr: label_attr } %}{{ block('attributes') }}{% endwith %}{% endif %}>{{ translation_domain is same as(false) ? label : label|trans({}, translation_domain) }}{% block form_label_errors %}{{- form_errors(form) -}}{% endblock form_label_errors %}</{{ element|default('label') }}>#}
+    {#{%- else -%}#}
+        {#{%- if errors|length > 0 -%}#}
+            {#<div id="{{ id }}_errors" class="mb-2">#}
+                {#{{- form_errors(form) -}}#}
+            {#</div>#}
+        {#{%- endif -%}#}
+    {#{%- endif -%}#}
+{#{%- endblock -%}#}
+
+
+{#{%- block payment_method_widget -%}#}
+
+{#{%- endblock -%}#}
+
+
+{#{% block payment_method_entry_widget -%}#}
+    {#{%- set parent_label_class = parent_label_class|default(label_attr.class|default('')) -%}#}
+    {#{%- set attr = attr|merge({class: (attr.class|default('') ~ ' custom-control-input')|trim}) -%}#}
+    {#<div class="custom-control custom-radio{{ 'radio-inline' in parent_label_class ? ' custom-control-inline' }}">#}
+        {#{{- form_label(form, null, { widget: parent() }) -}}#}
+    {#</div>#}
+{#{%- endblock checkbox_widget %}#}

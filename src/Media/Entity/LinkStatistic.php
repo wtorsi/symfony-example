@@ -8,7 +8,7 @@ use Location\Entity\City;
 use Ramsey\Uuid\Uuid;
 
 /**
- * @ORM\Entity(readOnly=true)
+ * @ORM\Entity(readOnly=true, repositoryClass="Media\Repository\LinkStatisticRepository")
  * @ORM\ChangeTrackingPolicy(value="DEFERRED_EXPLICIT")
  * @ORM\Cache(usage="READ_ONLY")
  */
@@ -45,5 +45,29 @@ class LinkStatistic
         $this->link = $link;
         $this->city = $city;
         $this->meta = $meta;
+    }
+
+    /**
+     * @return \DateTimeImmutable
+     */
+    public function getDatetime(): \DateTimeImmutable
+    {
+        return $this->datetime;
+    }
+
+    /**
+     * @return City
+     */
+    public function getCity(): ?City
+    {
+        return $this->city;
+    }
+
+    /**
+     * @return array
+     */
+    public function getMeta(): array
+    {
+        return $this->meta;
     }
 }

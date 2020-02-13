@@ -27,12 +27,21 @@ class LoginType extends AbstractType
         $this->translator = $translator;
     }
 
+    public function configureOptions(OptionsResolver $resolver)
+    {
+        $resolver->setDefaults([
+            'method' => 'post',
+            'csrf_token_id' => 'authenticate',
+            'data_class' => LoginDto::class,
+            'label_format' => 'security.field.%name%'
+        ]);
+    }
+
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
             ->add('username', EmailType::class, [
                 'required' => true,
-                'label' => 'security.field.username',
                 'attr' => [
                     'autocomplete' => 'username email',
                 ],
@@ -43,7 +52,6 @@ class LoginType extends AbstractType
             ])
             ->add('password', PasswordType::class, [
                 'required' => true,
-                'label' => 'security.field.password',
                 'attr' => [
                     'autocomplete' => 'current-password',
                 ],
@@ -55,12 +63,5 @@ class LoginType extends AbstractType
         $builder->get('username')->addViewTransformer(new LowercaseTransformer());
     }
 
-    public function configureOptions(OptionsResolver $resolver)
-    {
-        $resolver->setDefaults([
-            'method' => 'post',
-            'csrf_token_id' => 'authenticate',
-            'data_class' => LoginDto::class,
-        ]);
-    }
+
 }

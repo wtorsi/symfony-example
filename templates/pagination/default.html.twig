@@ -1,0 +1,125 @@
+{#
+@var current int
+@var pagesCount int
+@var elementsCount int,
+@var startPage int
+@var endPage int
+@var previous int
+@var next int
+@var pages array
+#}
+{# @var app \Symfony\Bridge\Twig\AppVariable #}
+{%- trans_default_domain "pagination" %}
+{%- if pagesCount > 1 %}
+    {%- set _route = app.request.attributes.get("_route") %}
+    {%- set _route_params = app.request.attributes.get("_route_params")|merge(app.request.query.all()) %}
+    {%- set _route_params = _route_params|merge({(page_parameter): null }) %}
+    <nav class="pagination-container my-4 " aria-label="{{- 'pagination.label'|trans -}}">
+        <ul class="pagination justify-content-center mb-0">
+            {%- if previous is defined %}
+                <li class="page-item">
+                    {%- set path = path(_route, _route_params|merge({(page_parameter): previous > 1 ? previous : null})) -%}
+                    <a href="{{- path -}}"
+                       class="page-link"
+                       rel="prev"
+                       title="{{- 'pagination.previous'|trans -}}"
+                       aria-label="{{- "pagination.previous"|trans -}}">
+                        <i class="far  fa-angle-left"></i>
+                        <span class="sr-only">{{- 'pagination.previous'|trans -}}</span>
+                    </a>
+                </li>
+            {%- else %}
+                <li class="page-item disabled" aria-label="{{- "pagination.previous"|trans -}}">
+                    <a class="page-link" tabindex="-1" aria-disabled="true">
+                        <i class="fa  fa-angle-double-left"></i>
+                        <span class="sr-only">{{- 'pagination.previous'|trans -}}</span>
+                    </a>
+                </li>
+            {%- endif %}
+
+            {%- if startPage > 1 %}
+                <li class="page-item">
+                    <a href="{{- path(_route, _route_params|merge({(page_parameter): null})) -}}"
+                       title="{{ 'pagination.to_page'|trans({'%page%': 1}) }}"
+                       class="page-link">1</a>
+                </li>
+                {%- if startPage == 3 %}
+                    <li class="page-item">
+                        <a href="{{- path(_route, _route_params|merge({(page_parameter): 2})) -}}"
+                           title="{{ 'pagination.to_page'|trans({'%page%': 2}) }}"
+                           class="page-link">2</a>
+                    </li>
+                {%- elseif startPage != 2 %}
+                    <li class="page-item disabled">
+                        <a class="page-link" tabindex="-1" aria-disabled="true">
+                            <i class="far  fa-ellipsis-h"></i>
+                        </a>
+                    </li>
+                {%- endif %}
+            {%- endif %}
+
+            {%- for page in pages %}
+                {%- if page != current %}
+                    <li class="page-item">
+                        {%- set path =  path(_route, _route_params|merge({(page_parameter): page > 1 ? page : null})) -%}
+                        <a href="{{- path -}}"
+                           title="{{ 'pagination.to_page'|trans({'%page%': page}) }}"
+                           class="page-link">{{- page -}}</a>
+                    </li>
+                {%- else %}
+                    <li class="page-item active" aria-current="page">
+                        <a href="" class="page-link">
+                            {{- page -}}
+                            <span class="sr-only">{{- "pagination.current"|trans -}}</span>
+                        </a>
+                    </li>
+                {%- endif %}
+            {%- endfor %}
+
+            {%- if pagesCount > endPage %}
+                {%- if pagesCount > (endPage + 1) %}
+                    {%- if pagesCount > (endPage + 2) %}
+                        <li class="page-item disabled">
+                            <a class="page-link" aria-disabled="true">
+                                <i class="far  fa-ellipsis-h"></i>
+                            </a>
+                        </li>
+                    {%- else %}
+                        <li class="page-item">
+                            <a href="{{- path(_route, _route_params|merge({(page_parameter): (pagesCount - 1)})) -}}"
+                               class="page-link">
+                                {{- pagesCount - 1 -}}
+                            </a>
+                        </li>
+                    {%- endif %}
+                {%- endif %}
+
+                <li class="page-item">
+                    <a href="{{- path(_route, _route_params|merge({(page_parameter): pagesCount})) -}}"
+                       class="page-link">
+                        {{- pagesCount -}}
+                    </a>
+                </li>
+            {%- endif %}
+            {%- if next is defined %}
+                <li class="page-item">
+                    <a href="{{- path(_route, _route_params|merge({(page_parameter): next})) -}}"
+                       rel="next"
+                       class="page-link"
+                       title="{{- "pagination.next"|trans -}}"
+                       aria-label="{{- "pagination.next"|trans -}}">
+                        <span class="sr-only">{{- 'pagination.next'|trans -}}</span>
+                        <i class="far  fa-angle-right"></i>
+                    </a>
+                </li>
+            {%- else %}
+                <li class="page-item disabled" aria-label="{{- "pagination.next"|trans -}}">
+                    <a class="page-link" aria-disabled="true">
+                        <span class="sr-only">{{- 'pagination.next'|trans -}}</span>
+                        <i class="far  fa-angle-left"></i>
+                    </a>
+                </li>
+            {%- endif %}
+        </ul>
+    </nav>
+{%- endif %}

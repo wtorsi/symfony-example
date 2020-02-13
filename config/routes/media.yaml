@@ -1,0 +1,4 @@
+media:
+    resource: "../../src/Media/Controller/"
+    type:     annotation
+    prefix: "%app.path%"

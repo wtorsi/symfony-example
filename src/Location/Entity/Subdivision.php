@@ -14,6 +14,7 @@ use Ramsey\Uuid\Uuid;
 class Subdivision
 {
     use IdTrait;
+
     /**
      * @ORM\Column(type="string", length=127, nullable=false)
      */
@@ -23,7 +24,7 @@ class Subdivision
      */
     private string $isoCode;
 
-    public function __construct(string $name, string $isoCode)
+    public function __construct( string $name, string $isoCode)
     {
         $this->id = Uuid::uuid4();
         $this->name = $name;

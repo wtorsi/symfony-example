@@ -1,0 +1,19 @@
+{
+  "version": "1.0",
+  "name": "dev/pagination-bundle",
+  "type": "library",
+  "description": "",
+  "keywords": [],
+  "homepage": "",
+  "license": "MIT",
+  "authors": [],
+  "require": {
+    "php": "^7.4"
+  },
+  "autoload": {
+    "psr-4": {
+      "Dev\\PaginationBundle\\": ""
+    }
+  },
+  "minimum-stability": "dev"
+}

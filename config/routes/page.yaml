@@ -1,0 +1,4 @@
+page:
+    resource: "../../src/Page/Controller/"
+    type:     annotation
+    prefix: "%app.path%"

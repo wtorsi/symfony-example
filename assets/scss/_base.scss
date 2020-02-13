@@ -1,0 +1,15 @@
+@import "fonts";
+@import "init";
+@import "bootstrap";
+@import "fontawesome";
+@import "component/developer/developer";
+
+#header{
+  z-index: 10;
+  position: relative;
+}
+
+#main {
+  position: relative;
+  display: block;
+}

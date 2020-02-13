@@ -2,7 +2,6 @@
 
 namespace Media\Collector;
 
-use Location\Detector\CityDetector;
 use Location\Detector\CityDetectorInterface;
 use Media\Entity\Link;
 use Media\Messenger\Message\OpenLinkMessage;
@@ -14,7 +13,7 @@ class LinkStatisticCollector
     private MessageBusInterface $bus;
     private CityDetectorInterface $cityDetector;
 
-    public function __construct(MessageBusInterface $bus, CityDetectorInterface $cityDetector)
+    public function __construct(CityDetectorInterface $cityDetector, MessageBusInterface $bus)
     {
         $this->bus = $bus;
         $this->cityDetector = $cityDetector;
@@ -31,6 +30,7 @@ class LinkStatisticCollector
     private function parseRequest(Request $request): array
     {
         $userAgent = $request->headers->get('User-Agent');
+
 
         return [
             'User-Agent' => $userAgent,

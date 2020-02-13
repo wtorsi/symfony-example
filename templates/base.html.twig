@@ -1,12 +1,111 @@
-<!DOCTYPE html>
-<html>
+{# @var config \Configuration\Entity\Configuration #}
+{# @var projectProvider \Activity\Provider\ProjectProvider #}
+{# @var activityProvider \Activity\Provider\ActivityProvider #}
+{%- set _route = app.request.attributes.get('_route') -%}
+{%- set _route_params = app.request.attributes.get('_route_params') -%}
+{%- set _url = _route ? url(_route, _route_params) : url("page_index") -%}
+<!doctype html>
+<html lang="ru" class="h-100">
+{%- apply spaceless -%}
     <head>
-        <meta charset="UTF-8">
-        <title>{% block title %}Welcome!{% endblock %}</title>
-        {% block stylesheets %}{% endblock %}
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        <meta name="include_mode" content="async"/>
+        {%- set title -%}
+            {{ "meta.title.common"|trans }} {{ meta.title|default('') ? ' | ' ~ meta.title }}
+            {%- if app.request.query.has("page") and app.request.query.get("page") > 1 -%}
+                | {{ "meta.title.page"|trans({"%page%": app.request.query.get("page")}) -}}
+            {%- endif -%}
+        {%- endset -%}
+        {%- set title = title|replace({"\n": "", "\r\n": "", "\t": "", "\n\r": ""})|trim -%}
+        {%- set description = meta.description|default("meta.description.common"|trans) -%}
+        {%- set keywords = meta.keywords|default("meta.keywords.common"|trans) -%}
+        {%- set socialTitle = meta.socialTitle|default(title) -%}
+        {%- set socialDescription = meta.socialDescription|default(description) -%}
+
+        <title>{{- title -}}</title>
+
+        {%- block stylesheets -%}{%- endblock -%}
+
+        {%- block meta -%}
+            {%- if
+                not app.request.query.has("page")
+                and not app.request.query.has("filter")
+                and not app.request.query.has("sort")
+                and not app.request.query.has("order")
+                and not app.request.query.has("limit") -%}
+                <meta name="keywords" content="{{ keywords }}">
+                <meta name="description" content="{{ description }}">
+            {% endif %}
+
+            <meta property="og:url" content="{{ _url }}"/>
+            {%- block social_meta -%}
+                <meta property="og:title" content="{{ socialTitle }}"/>
+                <meta property="og:description" content="{{ socialDescription }}"/>
+            {%- endblock -%}
+        {% endblock %}
+
+        {% apply spaceless %}
+            {#replacement icons#}
+            <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+            <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+            <link rel="icon" type="image/png" sizes="192x192" href="/android-chrome-192x192.png">
+            <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+            <link rel="manifest" href="/site.webmanifest">
+            <link rel="mask-icon" href="/safari-pinned-tab.svg" color="#000000">
+            <meta name="apple-mobile-web-app-title" content="Ya">
+            <meta name="application-name" content="Ya">
+            <meta name="msapplication-TileColor" content="#000000">
+            <meta name="theme-color" content="#ffffff">
+            {#endreplacement#}
+        {% endapply %}
+        {%- block canonical -%}
+            <link rel="canonical" href="{{ _url }}"/>
+        {%- endblock -%}
     </head>
-    <body>
-        {% block body %}{% endblock %}
-        {% block javascripts %}{% endblock %}
-    </body>
+{%- endapply -%}
+<body>
+<a class="skippy sr-only sr-only-focusable" href="#main">{{- 'meta.skip_to_main_content'|trans -}}</a>
+{%- block body -%}
+    {%- block header -%}
+        <header>
+
+        </header>
+    {%- endblock -%}
+
+
+    {%- block main -%}
+        <main class="main min-vh-100 container py-6" id="main">
+            {%- block content_outer -%}
+                <div class="row">
+                    <div class="col-12 col-md-6">
+                        {%- block content -%}{%- endblock -%}
+                    </div>
+                </div>
+            {%- endblock -%}
+        </main>
+    {%- endblock -%}
+    {%- block footer_outer -%}
+        <footer class="container my-2">
+            <div class="row align-items-center">
+                <div class="col-6">
+                    <p class="mb-0 small">{{- 'common.copy'|trans({'%year%': 'now'|date('Y')}) -}}</p>
+                </div>
+                <div class="col-6 ">
+                    <p class="small mb-0 text-right">
+                        {%- include 'developer/footer.html.twig' only -%}
+                    </p>
+                </div>
+            </div>
+
+        </footer>
+    {%- endblock -%}
+{%- endblock -%}
+
+{%- block modals -%}
+{%- endblock -%}
+
+</body>
 </html>
+{%- block javascripts -%}{%- endblock -%}
+

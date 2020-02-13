@@ -1,0 +1,10 @@
+[Unit]
+Description=Process AMQP consumer
+After=rabbitmq-server.service
+
+[Service]
+ExecStart=/usr/bin/php bin/console messenger:consume async_priority_high async_priority_low --time-limit=3600 --memory-limit=128M
+Restart=always
+
+[Install]
+WantedBy=multi-user.target

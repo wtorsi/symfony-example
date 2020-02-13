@@ -1,5 +1,5 @@
 parameters:
-    geoip.csv_path: '%kernel.project_dir%/var/geoip/GeoLite2-City-Locations-ru.csv'
+    geoip.csv_path: '%kernel.project_dir%/var/geoip/GeoLite2-City-Locations-en.csv'
     geoip.binary_path: '%kernel.project_dir%/var/geoip/GeoLite2-City.mmdb'
 
 

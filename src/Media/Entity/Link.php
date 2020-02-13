@@ -1,27 +1,35 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 namespace Media\Entity;
 
 use Core\Entity\IdTrait;
 use Doctrine\ORM\Mapping as ORM;
+use Media\Form\Dto\LinkDto;
+use Media\Slugger\SluggerInterface;
 use Ramsey\Uuid\Uuid;
-use User\Entity\User;
+use Symfony\Component\Security\Core\User\UserInterface;
 
 /**
- * @ORM\Entity()
+ * @ORM\Entity(readOnly=true, repositoryClass="Media\Repository\LinkRepository")
  * @ORM\ChangeTrackingPolicy(value="DEFERRED_EXPLICIT")
- * @ORM\Cache(usage="NONSTRICT_READ_WRITE")
+ * @ORM\Cache(usage="READ_ONLY")
  */
 class Link
 {
     use IdTrait;
 
     /**
+     * @ORM\Column(type="datetime_immutable", nullable=false)
+     */
+    private \DateTimeImmutable $createdDatetime;
+    /**
      * @ORM\ManyToOne(targetEntity="User\Entity\User")
      * @ORM\JoinColumn(nullable=false)
      * @ORM\Cache(usage="NONSTRICT_READ_WRITE")
      */
-    private User $user;
+    private UserInterface $user;
     /**
      * @ORM\Column(type="string", length=4096, nullable=false)
      */
@@ -35,17 +43,56 @@ class Link
      */
     private ?\DateTimeImmutable $expirationDatetime = null;
 
-    public function __construct(User $user, string $url, string $hash, ?\DateTimeImmutable $expirationDatetime)
+    public function __construct(UserInterface $user, string $url, string $hash)
     {
         $this->id = Uuid::uuid4();
         $this->user = $user;
         $this->url = $url;
         $this->hash = $hash;
-        $this->expirationDatetime = $expirationDatetime;
+        $this->createdDatetime = new \DateTimeImmutable();
+    }
+
+    public static function factory(LinkDto $dto, SluggerInterface $slugger): self
+    {
+        $entity = new static(
+            $dto->getUser(),
+            $dto->url,
+            $slugger->slugify($dto->url, ['length' => 10, 'class' => static::class, 'field' => 'hash']),
+        );
+
+        $entity->expirationDatetime = $dto->expirationDatetime;
+
+        return $entity;
+    }
+
+    /**
+     * @return \DateTimeImmutable
+     */
+    public function getCreatedDatetime(): \DateTimeImmutable
+    {
+        return $this->createdDatetime;
+    }
+
+    /**
+     * @return \DateTimeImmutable|null
+     */
+    public function getExpirationDatetime(): ?\DateTimeImmutable
+    {
+        return $this->expirationDatetime;
+    }
+
+    public function isExpired(): bool
+    {
+        return null !== $this->expirationDatetime && $this->expirationDatetime < new \DateTimeImmutable();
     }
 
     public function getUrl(): string
     {
         return $this->url;
+    }
+
+    public function getHash(): string
+    {
+        return $this->hash;
     }
 }

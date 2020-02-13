@@ -6,7 +6,6 @@ namespace Location\Bridge;
 
 use Doctrine\ORM\EntityManagerInterface;
 use GeoIp2\Database\Reader;
-use GeoIp2\Record\Subdivision;
 use Location\Entity\City;
 
 class GeoIpBridge
@@ -29,18 +28,10 @@ class GeoIpBridge
             return null;
         }
 
-        $names = $record->city->names;
-        /** @var Subdivision[] $subdivisions */
-        $subdivisions = $record->subdivisions;
-
-        $er = $this->em->getRepository(City::class);
-        foreach ($subdivisions as $subdivision) {
-            $city = $er->findOneByNameSubdivisionIsoCode($names['ru'], $subdivision->isoCode);
-            if (null !== $city) {
-                return $city;
-            }
+        if (!$id = $record->city->geonameId) {
+            return null;
         }
 
-        return null;
+        return $this->em->getRepository(City::class)->findOneBy(['externalId' => $id]);
     }
 }

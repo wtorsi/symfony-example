@@ -2,14 +2,16 @@
 
 namespace Media\Form\Type;
 
+use Form\Validator\Constraints\Url;
 use Media\Form\Dto\LinkDto;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\DateTimeType;
 use Symfony\Component\Form\Extension\Core\Type\UrlType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Validator\Constraints\Callback;
 use Symfony\Component\Validator\Constraints\NotBlank;
-use Symfony\Component\Validator\Constraints\Url;
+use Symfony\Component\Validator\Context\ExecutionContextInterface;
 
 class LinkType extends AbstractType
 {
@@ -26,6 +28,7 @@ class LinkType extends AbstractType
         $builder
             ->add('url', UrlType::class, [
                 'required' => true,
+                'default_protocol' => null,
                 'constraints' => [
                     new NotBlank(),
                     new Url(),
@@ -36,6 +39,19 @@ class LinkType extends AbstractType
                 'html5' => true,
                 'widget' => 'single_text',
                 'input' => 'datetime_immutable',
+                'label' => 'link.field.datetime',
+                'help' => 'link.field.datetime_help',
+                'constraints' => [
+                    new Callback(function (?\DateTimeImmutable $value, ExecutionContextInterface $context) {
+                        if (null === $value || $value > new \DateTimeImmutable()) {
+                            return;
+                        }
+
+                        $context
+                            ->buildViolation('link.expiration_less_than_now')
+                            ->addViolation();
+                    }),
+                ],
             ]);
     }
 }

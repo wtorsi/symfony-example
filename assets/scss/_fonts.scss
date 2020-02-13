@@ -1,0 +1,34 @@
+//$fonts: (
+//		('file':'hinted-subset-Montserrat-Regular', 'name': 'Montserrat', 'weight': 400, 'style': normal),
+//		('file':'hinted-subset-Montserrat-Italic', 'name': 'Montserrat', 'weight': 400, 'style': italic),
+//		('file':'hinted-subset-Montserrat-Medium', 'name': 'Montserrat', 'weight': 500, 'style': normal),
+//		('file':'hinted-subset-Merriweather-Regular', 'name': 'Merriweather', 'weight': 400, 'style': normal),
+//		('file':'hinted-subset-Merriweather-Black', 'name': 'Merriweather', 'weight': 900, 'style': normal),
+//);
+//$font-path: '../font';
+//$font-display: swap;
+//
+//@each $mapping in $fonts {
+//  @font-face {
+//
+//	$file: map-get($mapping, 'file');
+//	$type: map-get($mapping, 'name');
+//	$weight: map-get($mapping, 'weight');
+//	$style: map-get($mapping, 'style');
+//
+//	font-family: $type;
+//	font-style: $style;
+//	font-weight: $weight;
+//	font-display: $font-display;
+//
+//
+//	src: url('#{$font-path}/#{$file}.eot');
+//	src:
+//			//local('Montserrat #{$type}'), local('Montserrat-#{$type}'),
+//	url('#{$font-path}/#{$file}.eot?#iefix') format('embedded-opentype'),
+//	url('#{$font-path}/#{$file}.woff2') format('woff2'),
+//	url('#{$font-path}/#{$file}.woff') format('woff'),
+//	url('#{$font-path}/#{$file}.ttf') format('truetype'),
+//	url('#{$font-path}/#{$file}.svg#fontawesome') format('svg');
+//  }
+//}

@@ -1,0 +1,72 @@
+//@import "~bootstrap/scss/tables";
+
+//
+// Basic Bootstrap table
+//
+
+.table {
+  width: 100%;
+  margin-bottom: $spacer;
+  color: $table-color;
+  background-color: $table-bg; // Reset for nesting within parents with `background-color`.
+
+  th,
+  td {
+	padding: $table-cell-padding;
+	vertical-align: middle;
+	border-top: $table-border-width solid $table-border-color;
+  }
+
+  thead th {
+	vertical-align: bottom;
+	border-bottom: (2 * $table-border-width) solid $table-border-color;
+  }
+
+  tbody + tbody {
+	border-top: (2 * $table-border-width) solid $table-border-color;
+  }
+}
+
+.table-bordered {
+  border: $table-border-width solid $table-border-color;
+
+  th,
+  td {
+	border: $table-border-width solid $table-border-color;
+  }
+
+  thead {
+	th,
+	td {
+	  border-bottom-width: 2 * $table-border-width;
+	}
+  }
+}
+
+
+
+// Responsive tables
+//
+// Generate series of `.table-responsive-*` classes for configuring the screen
+// size of where your table will overflow.
+
+.table-responsive {
+  @each $breakpoint in map-keys($grid-breakpoints) {
+	$next: breakpoint-next($breakpoint, $grid-breakpoints);
+	$infix: breakpoint-infix($next, $grid-breakpoints);
+
+	&#{$infix} {
+	  @include media-breakpoint-down($breakpoint) {
+		display: block;
+		width: 100%;
+		overflow-x: auto;
+		-webkit-overflow-scrolling: touch;
+
+		// Prevent double border on horizontal scroll due to use of `display: block;`
+		> .table-bordered {
+		  border: 0;
+		}
+	  }
+	}
+  }
+}

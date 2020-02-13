@@ -27,11 +27,6 @@ class User implements UserInterface
     private string $email;
     /**
      * @var string
-     * @ORM\Column(type="string", length=255, nullable=false, unique=true)
-     */
-    private string $username;
-    /**
-     * @var string
      * @ORM\Column(type="string", length=97, nullable=false)
      */
     private string $password;
@@ -41,26 +36,17 @@ class User implements UserInterface
      */
     private array $roles = [];
 
-    /**
-     * @throws \Exception
-     */
-    private function __construct(string $username, string $email, array $roles = [Roles::ROLE_USER])
+    private function __construct(string $email, array $roles = [Roles::ROLE_USER])
     {
         $this->id = Uuid::uuid4();
         $this->email = $email;
-        $this->username = $username;
         $this->roles = $roles;
     }
 
-    /**
-     * @return User
-     *
-     * @throws \Exception
-     */
-    public static function create(string $username, string $email, callable $password, array $roles = [Roles::ROLE_USER]): self
+    public static function create(string $email, callable $encoder, array $roles = [Roles::ROLE_USER]): self
     {
-        $user = new static($username, $email, $roles);
-        $user->password = \call_user_func($password, $user);
+        $user = new static($email, $roles);
+        $user->password = \call_user_func($encoder, $user);
 
         return $user;
     }
@@ -87,6 +73,5 @@ class User implements UserInterface
 
     public function eraseCredentials()
     {
-
     }
 }

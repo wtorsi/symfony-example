@@ -13,8 +13,8 @@
 - login: _prod@email.ru_ pass: _prod_ 
 - login: _test@email.ru_ pass: _test_  
 And ready to use `prod` version of the app.\
-_Notice!_ the install script will load geoip database from maxmind public databases in background, it can take up to 20 min to load it all.\
-_Notice!_ the install script automatically starts a worker from console, to stop it use CONTROL-C.
+**_Notice!_** the install script will load geoip database from maxmind public databases in background, it can take up to 20 min to load it all.\
+**_Notice!_** the install script automatically starts a worker from console, to stop it use CONTROL-C.
 
 
 #### Testing

@@ -25,3 +25,9 @@ yarn-error.log
 
 !/var/geoip/GeoLite2-City.mmdb
 !/var/geoip/GeoLite2-City-Locations-en.csv
+
+###
+.docker/
+Dockerfile
+docker-compose.production.yaml
+docker-compose.yaml

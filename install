@@ -13,5 +13,6 @@ bin/console messenger:setup-transports ;
 export APP_ENV=prod APP_DEBUG=0;
 composer dump-env prod;
 composer install --no-dev --optimize-autoloader --classmap-authoritative --apcu-autoloader;
-bin/console  messenger:consume async_priority_high async_priority_low ;
+bin/console location:database:update ;
+bin/console messenger:consume async_priority_high async_priority_low ;
 

@@ -1,18 +1,18 @@
 #!/bin/bash
 set -x;
 
-export APP_ENV=dev APP_DEBUG=1;
-composer install;
+export APP_ENV=dev APP_DEBUG=1
+composer install
 
-bin/console doctrine:database:create ;
-bin/console doctrine:migration:migrate -n ;
-bin/console doctrine:fixtures:load -n ;
+bin/console doctrine:database:create
+bin/console doctrine:migration:migrate -n
+bin/console doctrine:fixtures:load -n
 
-bin/console messenger:setup-transports ;
+bin/console messenger:setup-transports
 
-export APP_ENV=prod APP_DEBUG=0;
-composer dump-env prod;
-composer install --no-dev --optimize-autoloader --classmap-authoritative --apcu-autoloader;
-bin/console location:database:update ;
-bin/console messenger:consume async_priority_high async_priority_low ;
+export APP_ENV=prod APP_DEBUG=0
+composer dump-env prod
+composer install --no-dev --optimize-autoloader --classmap-authoritative --apcu-autoloader
+bin/console location:database:update &
+bin/console messenger:consume async_priority_high async_priority_low
 

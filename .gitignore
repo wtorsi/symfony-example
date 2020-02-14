@@ -21,3 +21,7 @@
 npm-debug.log
 yarn-error.log
 ###< symfony/webpack-encore-bundle ###
+
+
+!/var/geoip/GeoLite2-City.mmdb
+!/var/geoip/GeoLite2-City-Locations-en.csv
